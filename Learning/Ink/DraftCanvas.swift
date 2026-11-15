@@ -647,7 +647,7 @@ struct DraftCanvas: UIViewRepresentable {
             let picker = DraftToolPicker.shared
             picker.addObserver(canvas)
             picker.addObserver(self)
-            if let tool = picker.selectedToolItem.tool { canvas.tool = tool }
+            if let tool = picker.currentTool { canvas.tool = tool }
             attachHoldRecognizer(canvas)
 
             let nc = NotificationCenter.default
@@ -1216,7 +1216,7 @@ struct DraftCanvas: UIViewRepresentable {
         }
 
         private func syncSelectedTool(_ picker: PKToolPicker) {
-            guard let canvas, let tool = picker.selectedToolItem.tool else { return }
+            guard let canvas, let tool = picker.currentTool else { return }
             canvas.tool = tool
             (canvas.superview as? DraftCanvasContainer)?.setInputEnabled(enabled)
             InkLog.write("tool_change", ["page": key, "tool": Self.describe(tool),
@@ -1627,5 +1627,13 @@ struct DraftCanvas: UIViewRepresentable {
                 return ["kind": String(describing: type(of: tool))]
             }
         }
+    }
+}
+
+extension PKToolPicker {
+    /// 当前选中的工具。PKToolPickerItem.tool 要 iOS 26，更低版本（在 Mac 上以「为 iPad 设计」方式运行时）用 selectedTool
+    var currentTool: PKTool? {
+        if #available(iOS 26.0, *) { return selectedToolItem.tool }
+        return selectedTool
     }
 }
