@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- 让 App 的 Documents 在「文件」App 和访达中可见，用于放入教辅包 -->
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<!-- 只允许下面这个 HTTP 供应商，其他主机仍受 ATS 保护 -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<!-- oracle-arm 内网上的 magpie 网关（经 Clash：中转 → oracle-amd 的 shadowsocks → VCN 内网） -->
+			<key>10.0.0.118</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>和手机上的复习 App 同步今天的复习题和作答；连接你在模型供应商设置中填写的局域网 AI 服务。</string>
+	<!-- 用 Bonjour 找手机复习 App（learningpack-android）的同步服务 -->
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_lpreview._tcp</string>
+	</array>
+</dict>
+</plist>

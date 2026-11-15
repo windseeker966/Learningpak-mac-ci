@@ -1,0 +1,14 @@
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+.DS_Store
+
+# 原书 PDF 只保存在本地
+*.pdf
+
+# 从 iPad 导出的数据存档（个人数据，体积大）
+Backups/
+
+# 公式检查工具的编译产物
+PackFormat/mathcheck/.build/
